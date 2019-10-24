@@ -6,4 +6,4 @@ line front-end framework v2.0 支援了許多新功能，包含QR Code掃描。
 demo:
 https://www.youtube.com/embed/vaTmnvI-VOM 
 
-[!(https://i.imgur.com/LZvm3MV.png)]
+<img src='https://i.imgur.com/LZvm3MV.png' /> 
