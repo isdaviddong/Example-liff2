@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>LIFF 2 範例 (.NET Core)</title>
+    <title>LIFF 2.1 範例 (.NET Core)</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- bootstrap 4.3.1 -->
@@ -11,15 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-   <style>
-       #MainDiv button {
-           margin:3px;
-       }
-   </style>
+    <style>
+        #MainDiv button {
+            margin: 3px;
+        }
+    </style>
     <script>
         //你的liff app ID, 例如 --> 0000000000-spPeRmAn
-        var YourLiffAppId = '____請換成你的LiffAppID_____';
- 
+        var YourLiffAppId = '______liff_app_ID,________';
+
         function initializeLiff(myLiffId) {
             liff
                 .init({
@@ -41,6 +41,138 @@
         }
 
         $(document).ready(function () {
+
+
+            $('#FlexMessageContentObject').val(`
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip3.jpg",
+        "size": "full",
+        "aspectMode": "cover",
+        "aspectRatio": "1:1",
+        "gravity": "center"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "position": "absolute",
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "endColor": "#00000000",
+          "startColor": "#00000099"
+        },
+        "width": "100%",
+        "height": "40%",
+        "offsetBottom": "0px",
+        "offsetStart": "0px",
+        "offsetEnd": "0px"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "Brown Grand Hotel",
+                    "size": "xl",
+                    "color": "#ffffff"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                  },
+                  {
+                    "type": "text",
+                    "text": "4.0",
+                    "color": "#a9a9a9"
+                  }
+                ],
+                "spacing": "xs"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "¥62,000",
+                        "color": "#ffffff",
+                        "size": "md",
+                        "flex": 0,
+                        "align": "end"
+                      },
+                      {
+                        "type": "text",
+                        "text": "¥82,000",
+                        "color": "#a9a9a9",
+                        "decoration": "line-through",
+                        "size": "sm",
+                        "align": "end"
+                      }
+                    ],
+                    "flex": 0,
+                    "spacing": "lg"
+                  }
+                ]
+              }
+            ],
+            "spacing": "xs"
+          }
+        ],
+        "position": "absolute",
+        "offsetBottom": "0px",
+        "offsetStart": "0px",
+        "offsetEnd": "0px",
+        "paddingAll": "20px"
+      }
+    ],
+    "paddingAll": "0px"
+  }
+}
+`);
+
             //init LIFF
             initializeLiff(YourLiffAppId);
 
@@ -89,7 +221,31 @@
                         alert('done');
                     })
             });
-
+            //ButtonSendMsg
+            $('#ButtonSendshareTargetPickerMsg').click(function () {
+                liff.shareTargetPicker(
+                    [
+                        {
+                            "type": "flex",
+                            "altText": "請用手機檢視此圖文訊息",
+                            "contents": JSON.parse($('#FlexMessageContentObject').val())
+                        }
+                    ]
+                )
+                    .then(function (res) {
+                        if (res) {
+                            // succeeded in sending a message through TargetPicker
+                            alert(`[${res.status}] 訊息已送出!`);
+                        } else {
+                            // sending message canceled
+                            alert("TargetPicker was closed!");
+                        }
+                    })
+                    .catch(function (error) {
+                        // something went wrong before sending a message
+                        alert(error);
+                    });
+            });
         });
     </script>
 </head>
@@ -108,6 +264,10 @@
             <label>要傳送的訊息:</label>
             <input class="form-control" type="text" id="msg" value="測試文字" /><br />
             <button class="btn btn-primary" id="ButtonSendMsg">要傳送的訊息</button>
+            <hr />
+            <label>要以ShareTargetPicker傳送的Flex訊息:</label>
+            <textarea class="form-control" type="text" id="FlexMessageContentObject" value="可使用Flex Message sim產生的訊息" cols="40" rows="5"></textarea><br />
+            <button class="btn btn-primary" id="ButtonSendshareTargetPickerMsg">Share Target Picker</button>
             <hr />
         </div>
     </div>
