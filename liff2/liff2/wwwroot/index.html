@@ -227,7 +227,7 @@
                     [
                         {
                             "type": "flex",
-                            "altText": "請用手機檢視此圖文訊息",
+                            "altText": $('#FlexMessageContentAltText').val(),
                             "contents": JSON.parse($('#FlexMessageContentObject').val())
                         }
                     ]
@@ -266,6 +266,7 @@
             <button class="btn btn-primary" id="ButtonSendMsg">要傳送的訊息</button>
             <hr />
             <label>要以ShareTargetPicker傳送的Flex訊息:</label>
+            <input class="form-control" type="text" id="FlexMessageContentAltText" value="Flex圖文訊息" /><br />
             <textarea class="form-control" type="text" id="FlexMessageContentObject" value="可使用Flex Message sim產生的訊息" cols="40" rows="5"></textarea><br />
             <button class="btn btn-primary" id="ButtonSendshareTargetPickerMsg">Share Target Picker</button>
             <hr />
